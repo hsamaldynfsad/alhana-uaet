@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProfitPulse OS | E-Commerce Unit Economics, ROAS & Margin Calculator (US & EU)</title>
+  <meta name="description" content="Calculate real-time e-commerce net profit margins, Breakeven ROAS, US Sales Tax, EU VAT (OSS), Amazon FBA, Shopify, and TikTok Shop fees.">
+  <meta name="keywords" content="ecommerce profit calculator, ROAS calculator, breakeven ROAS, Shopify margin calculator, Amazon FBA calculator US EU, EU VAT calculator">
+  <meta property="og:title" content="ProfitPulse OS | Enterprise E-Commerce Margin & ROAS Intelligence">
+  <meta property="og:description" content="Instant unit economics, breakeven ROAS, and scaling simulator for US, UK & European e-commerce brands.">
+  <meta property="og:type" content="website">
+
+  <!-- Structured Data for Google SEO (US & EU Rich Snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ProfitPulse OS",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    },
+    "description": "E-Commerce Profit Margin, Unit Economics, and Breakeven ROAS Calculator for US and European Union merchants."
+  }
+  </script>
+
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Cairo", sans-serif;
+      --bg-base: #090d16;
+      --bg-surface: #111726;
+      --bg-elevated: #192238;
+      --bg-hover: #222d48;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-tertiary: #64748b;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    html.light {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --bg-hover: #e2e8f0;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding-bottom: 100px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .ambient-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(99, 102, 241, 0.05) 50%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(17, 23, 38, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    html.light header {
+      background: rgba(255, 255, 255, 0.88);
+    }
+    .nav-wrapper {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    }
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge-region {
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .brand-text p {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pro-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-elevated);
+      padding: 4px 6px 4px 12px;
+      border-radius: 30px;
+      border: 1px solid var(--border-subtle);
+    }
+    .pro-status-txt {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .pro-toggle-btn {
+      background: linear-gradient(135deg, #3b82f6, #4f46e5);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pro-toggle-btn.is-active {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
+
+    .select-ctrl, .icon-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Ribbon */
+    .control-ribbon {
+      max-width: 1320px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: relative;
+      z-index: 10;
+    }
+    .presets-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .preset-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+    .preset-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-chip:hover, .preset-chip.active {
+      background: var(--bg-elevated);
+      color: var(--accent-blue);
+      border-color: rgba(59, 130, 246, 0.45);
+    }
+
+    /* Main Grid */
+    .app-layout {
+      max-width: 1320px;
+      margin: 20px auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+      position: relative;
+      z-index: 10;
+    }
+    @media (max-width: 1024px) {
+      .app-layout { grid-template-columns: 1fr; }
+    }
+
+    .glass-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+    }
+
+    /* Inputs */
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    .field-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .field-input-box input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 10px 48px 10px 12px;
+      outline: none;
+    }
+    [dir="rtl"] .field-input-box input {
+      padding: 10px 12px 10px 48px;
+    }
+    .field-input-box input:focus {
+      border-color: var(--accent-blue);
+    }
+    .field-addon {
+      position: absolute;
+      right: 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+    [dir="rtl"] .field-addon {
+      right: auto;
+      left: 12px;
+    }
+
+    /* Tax Region Presets */
+    .tax-quick-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .tax-mini-pill {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .tax-mini-pill:hover {
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    /* KPIs */
+    .kpi-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    @media (max-width: 640px) {
+      .kpi-matrix { grid-template-columns: 1fr; }
+    }
+    .kpi-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .kpi-card.highlight {
+      grid-column: span 3;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(99, 102, 241, 0.05)), var(--bg-elevated);
+      border-color: rgba(59, 130, 246, 0.35);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .kpi-card.highlight { grid-column: span 1; }
+    }
+    .kpi-meta-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .kpi-number {
+      font-size: 1.6rem;
+      font-weight: 900;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+    .kpi-card.highlight .kpi-number {
+      font-size: 2.2rem;
+      color: var(--accent-blue);
+    }
+    .kpi-unit {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .kpi-footnote {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    .health-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .health-pill.healthy { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .health-pill.moderate { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .health-pill.critical { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+
+    /* Breakdown Bar */
+    .breakdown-section {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+    .segmented-bar {
+      height: 14px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      display: flex;
+      margin: 10px 0 12px;
+    }
+    .seg-cogs { background: #64748b; }
+    .seg-shipping { background: #f59e0b; }
+    .seg-ads { background: #f43f5e; }
+    .seg-platform { background: #8b5cf6; }
+    .seg-profit { background: #10b981; }
+
+    .breakdown-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
+    }
+    .leg-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.73rem;
+      color: var(--text-secondary);
+    }
+    .leg-circle { width: 8px; height: 8px; border-radius: 50%; }
+    .leg-value { font-weight: 700; color: var(--text-primary); }
+
+    /* Pro Module */
+    .pro-module-wrapper { position: relative; }
+    .pro-locked-barrier {
+      position: absolute;
+      inset: 0;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-lg);
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 28px;
+      border: 1px dashed rgba(59, 130, 246, 0.35);
+    }
+    html.light .pro-locked-barrier { background: rgba(255, 255, 255, 0.92); }
+    .btn-upgrade-unlock {
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 14px;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+    }
+
+    .scaling-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 768px) {
+      .scaling-panel { grid-template-columns: 1fr; }
+    }
+    .scale-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    /* Footer with GDPR / CCPA Legal Links */
+    footer {
+      max-width: 1320px;
+      margin: 50px auto 30px;
+      padding: 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+    }
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .footer-links button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* GDPR / CCPA Consent Banner */
+    .gdpr-banner {
+      position: fixed;
+      bottom: 16px;
+      left: 20px;
+      right: 20px;
+      max-width: 880px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      z-index: 100;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .gdpr-banner.show { display: flex; }
+    .gdpr-text {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+    }
+    .gdpr-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-gdpr-accept {
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-gdpr-decline {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Legal Modal */
+    .legal-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      z-index: 120;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .legal-modal-backdrop.open { display: flex; }
+    .legal-modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 82vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+    }
+
+    /* AdSense Slot */
+    .ad-stream-banner {
+      max-width: 1320px;
+      margin: 24px auto 0;
+      padding: 12px 24px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .ad-tag-pill {
+      background: #f59e0b;
+      color: #000;
+      font-size: 0.62rem;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    @media print {
+      header, .control-ribbon, .ad-stream-banner, .gdpr-banner, footer, .pro-locked-barrier { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .app-layout { display: block !important; }
+      .glass-card, .kpi-card { background: #fff !important; border: 1px solid #ccc !important; color: #000 !important; margin-bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-wrapper">
+      <div class="brand-group">
+        <div class="brand-mark">⚡</div>
+        <div class="brand-text">
+          <h1>ProfitPulse OS <span class="badge-region">US & EU Edition</span></h1>
+          <p id="subHeadline">E-Commerce Unit Economics, ROAS & VAT/Sales Tax Intelligence</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Freemium Toggle -->
+        <div class="pro-pill">
+          <span class="pro-status-txt" id="tierStateTxt">Free Tier</span>
+          <button class="pro-toggle-btn" id="proToggleBtn" onclick="toggleProMode()">
+            Upgrade to Pro 🚀
+          </button>
+        </div>
+
+        <!-- Currency Selector (US & EU First) -->
+        <select class="select-ctrl" id="currencySelect" onchange="runEngine()" title="Currency">
+          <option value="USD" selected>🇺🇸 USD ($)</option>
+          <option value="EUR">🇪🇺 EUR (€)</option>
+          <option value="GBP">🇬🇧 GBP (£)</option>
+          <option value="CAD">🇨🇦 CAD ($)</option>
+          <option value="AED">🇦🇪 AED (د.إ)</option>
+        </select>
+
+        <!-- Language Switcher -->
+        <select class="select-ctrl" id="langSelect" onchange="switchLanguage()" title="Language">
+          <option value="en" selected>🇬🇧 English</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="ar">🇦🇪 العربية</option>
+        </select>
+
+        <!-- Theme Toggle -->
+        <button class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">🌓</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- US & EU Marketplace Presets Ribbon -->
+  <div class="control-ribbon">
+    <div class="presets-group">
+      <span class="preset-label" id="txtPresetLabel">US & EU Presets:</span>
+      <button class="preset-chip active" onclick="applyPreset('shopify_us', this)">🇺🇸 Shopify US + Stripe (2.9%)</button>
+      <button class="preset-chip" onclick="applyPreset('shopify_eu', this)">🇪🇺 Shopify EU + Stripe (1.5%)</button>
+      <button class="preset-chip" onclick="applyPreset('amazon_fba', this)">📦 Amazon FBA US/EU (15%)</button>
+      <button class="preset-chip" onclick="applyPreset('tiktok_us', this)">🎵 TikTok Shop US/UK (6%)</button>
+      <button class="preset-chip" onclick="applyPreset('etsy', this)">🎨 Etsy Global (6.5%)</button>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <button class="preset-chip" onclick="exportCSV()">📊 Export CSV</button>
+      <button class="preset-chip" onclick="window.print()">🖨️ Print PDF Report</button>
+    </div>
+  </div>
+
+  <!-- Main Workspace -->
+  <div class="app-layout">
+    <!-- Left Column: Inputs -->
+    <div class="glass-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">⚙️ <span id="txtInputTitle">Unit Economics & Cost Structure</span></div>
+          <div class="card-subtitle" id="txtInputSub">Configure product pricing, fulfillment, CAC & regional tax</div>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <div class="field-label">
+            <span id="lblSellPrice">Retail Price (AOV)</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inPrice" value="85" step="any" oninput="runEngine()">
+            <span class="field-addon curr-sym">USD</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="field-label">
+            <span id="lblCogs">Product Cost (COGS)</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inCogs" value="22" step="any" oninput="runEngine()">
+            <span class="field-addon curr-sym">USD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <div class="field-label">
+            <span id="lblShipping">Shipping & 3PL Fulfillment</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inShipping" value="8.50" step="any" oninput="runEngine()">
+            <span class="field-addon curr-sym">USD</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="field-label">
+            <span id="lblAdSpend">Ad Spend / Order (CAC)</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inAdSpend" value="24" step="any" oninput="runEngine()">
+            <span class="field-addon curr-sym">USD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div>
+          <div class="field-label">
+            <span id="lblPlatformFee">Payment / Referral Fee</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inPlatformPct" value="2.9" step="0.1" oninput="runEngine()">
+            <span class="field-addon">%</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="field-label">
+            <span id="lblVat">US Sales Tax / EU VAT</span>
+          </div>
+          <div class="field-input-box">
+            <input type="number" id="inVatPct" value="7.5" step="0.5" oninput="runEngine()">
+            <span class="field-addon">%</span>
+          </div>
+          <!-- Quick US & EU Tax Buttons -->
+          <div class="tax-quick-pills">
+            <button class="tax-mini-pill" onclick="setTax(0)">Tax-Free (0%)</button>
+            <button class="tax-mini-pill" onclick="setTax(7.5)">🇺🇸 US Avg (7.5%)</button>
+            <button class="tax-mini-pill" onclick="setTax(19)">🇩🇪 DE VAT (19%)</button>
+            <button class="tax-mini-pill" onclick="setTax(20)">🇫🇷/🇬🇧 FR/UK (20%)</button>
+            <button class="tax-mini-pill" onclick="setTax(21)">🇪🇸/🇳🇱 ES/NL (21%)</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <div class="field-label">
+          <span id="lblReturnRate">Estimated Return / Refund Rate Buffer</span>
+          <span id="valReturnPct">4%</span>
+        </div>
+        <div class="field-input-box">
+          <input type="number" id="inReturnPct" value="4.0" step="0.5" oninput="runEngine()">
+          <span class="field-addon">%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Analytics Dashboard -->
+    <div>
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">📈 <span id="txtAnalyticsTitle">Real-Time Profitability & ROAS Matrix</span></div>
+            <div class="card-subtitle" id="txtAnalyticsSub">Live contribution margin and paid acquisition metrics</div>
+          </div>
+          <div id="healthBadge" class="health-pill healthy">
+            ● <span id="healthTxt">Healthy Margin</span>
+          </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-matrix">
+          <div class="kpi-card highlight">
+            <div>
+              <div class="kpi-meta-title" id="lblNetProfitKpi">Net Profit per Order</div>
+              <div class="kpi-number">
+                <span id="outNetProfit">0.00</span>
+                <span class="kpi-unit curr-sym">USD</span>
+              </div>
+              <div class="kpi-footnote" id="txtNetProfitFoot">After COGS, 3PL shipping, CAC, processing fees & VAT/Sales Tax</div>
+            </div>
+            <div>
+              <div class="kpi-meta-title" id="lblMarginKpi">Net Operating Margin</div>
+              <div class="kpi-number" id="outMarginPct" style="color:var(--accent-emerald);">0.0%</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-meta-title" id="lblBeRoasKpi">Breakeven ROAS</div>
+            <div class="kpi-number" id="outBeRoas" style="color:var(--accent-amber);">0.0x</div>
+            <div class="kpi-footnote">Minimum Meta/Google ROAS</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-meta-title" id="lblCurRoasKpi">Realized ROAS</div>
+            <div class="kpi-number" id="outCurRoas" style="color:var(--accent-blue);">0.0x</div>
+            <div class="kpi-footnote">Current return on ad spend</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-meta-title" id="lblTotalCostsKpi">Total Unit Cost</div>
+            <div class="kpi-number">
+              <span id="outTotalCosts">0.00</span>
+              <span class="kpi-unit curr-sym">USD</span>
+            </div>
+            <div class="kpi-footnote">All-in landed & marketing cost</div>
+          </div>
+        </div>
+
+        <!-- Visual Breakdown -->
+        <div class="breakdown-section">
+          <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-secondary);">
+            <span id="txtDistTitle">Unit Revenue Allocation:</span>
+            <span id="outPriceSummary">85.00 USD</span>
+          </div>
+          <div class="segmented-bar">
+            <div id="barCogs" class="seg-cogs" style="width: 25%;"></div>
+            <div id="barShipping" class="seg-shipping" style="width: 15%;"></div>
+            <div id="barAds" class="seg-ads" style="width: 20%;"></div>
+            <div id="barFees" class="seg-platform" style="width: 10%;"></div>
+            <div id="barProfit" class="seg-profit" style="width: 30%;"></div>
+          </div>
+          <div class="breakdown-legend">
+            <div class="leg-badge"><span class="leg-circle seg-cogs"></span><span>COGS:</span> <span class="leg-value" id="legValCogs">25%</span></div>
+            <div class="leg-badge"><span class="leg-circle seg-shipping"></span><span>3PL/Ship:</span> <span class="leg-value" id="legValShip">15%</span></div>
+            <div class="leg-badge"><span class="leg-circle seg-ads"></span><span>CAC/Ads:</span> <span class="leg-value" id="legValAds">20%</span></div>
+            <div class="leg-badge"><span class="leg-circle seg-platform"></span><span>Tax/Fees:</span> <span class="leg-value" id="legValFees">10%</span></div>
+            <div class="leg-badge"><span class="leg-circle seg-profit"></span><span>Net Profit:</span> <span class="leg-value" id="legValProf">30%</span></div>
+          </div>
+        </div>
+
+        <!-- PRO Enterprise Module -->
+        <div class="pro-module-wrapper">
+          <div class="pro-locked-barrier" id="proLockOverlay">
+            <div style="font-size:28px; margin-bottom:8px;">🔒</div>
+            <div style="font-size:1.15rem; font-weight:800; margin-bottom:6px;" id="txtBarrierHead">Monthly & Annual EBITDA Scaling Simulator (Pro)</div>
+            <div style="font-size:0.82rem; color:var(--text-secondary); max-width:460px;" id="txtBarrierDesc">
+              Forecast monthly cash flow and annual run-rate across 50 to 10,000 monthly orders. Upgrade to Pro to unlock full forecasting and remove ads.
+            </div>
+            <button class="btn-upgrade-unlock" onclick="toggleProMode()" id="btnUnlockAction">
+              Unlock Pro Forecasting ($9/mo Demo) ⚡
+            </button>
+          </div>
+
+          <div class="card-header" style="margin-top:6px;">
+            <div class="card-title">🚀 <span id="txtScaleTitle">Monthly & Annual Volume Scaling Simulator (Pro)</span></div>
+          </div>
+
+          <div class="scaling-panel">
+            <div class="scale-card">
+              <div class="kpi-meta-title">Projected Monthly Order Volume</div>
+              <div class="kpi-number" style="color:var(--accent-blue);">
+                <span id="dispOrders">1,000</span> <span class="kpi-unit">orders / mo</span>
+              </div>
+              <input type="range" style="width:100%; margin-top:12px; accent-color:var(--accent-blue);" id="orderSlider" min="100" max="10000" step="100" value="1000" oninput="updateProProjections()">
+            </div>
+
+            <div class="scale-card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+              <div class="kpi-meta-title" style="color:var(--accent-emerald);">Projected Monthly Net Profit</div>
+              <div class="kpi-number" style="color:var(--accent-emerald);">
+                <span id="dispMonthlyNet">0</span> <span class="kpi-unit curr-sym">USD</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:8px;">
+                Annual Run-Rate: <strong id="dispYearlyNet" style="color:var(--text-primary);">0</strong> <span class="curr-sym">USD</span> / yr
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AdSense Compliant Slot -->
+  <div class="ad-stream-banner" id="adStreamBanner">
+    <div style="display:flex; align-items:center; gap:10px; font-size:0.8rem;">
+      <span class="ad-tag-pill">SPONSORED AD</span>
+      <span>🚀 Scale your Shopify & Amazon FBA brand in the US & Europe with automated 3PL fulfillment and VAT OSS filing.</span>
+    </div>
+    <span style="font-size:0.75rem; color:var(--accent-blue); cursor:pointer; font-weight:700; text-decoration:underline;" onclick="toggleProMode()">
+      Remove Ads (Pro)
+    </span>
+  </div>
+
+  <!-- US & EU Compliant Footer -->
+  <footer>
+    <div>
+      <strong>ProfitPulse OS</strong> © 2026. Built for US, UK & European E-Commerce Merchants. All calculations run 100% locally in your browser.
+    </div>
+    <div class="footer-links">
+      <button onclick="openLegalModal('privacy')">Privacy Policy (GDPR / CCPA)</button>
+      <button onclick="openLegalModal('terms')">Terms of Service</button>
+      <button onclick="openLegalModal('cookies')">Cookie Policy</button>
+      <button onclick="openLegalModal('disclaimer')">Financial Disclaimer</button>
+    </div>
+  </footer>
+
+  <!-- GDPR & CCPA Cookie Consent Banner -->
+  <div class="gdpr-banner" id="gdprBanner">
+    <div class="gdpr-text">
+      🍪 <strong>EU GDPR & US CCPA Privacy Notice:</strong> We use strictly necessary local storage to save your calculator preferences and Google AdSense cookies to serve relevant ads. No financial metrics ever leave your browser.
+    </div>
+    <div class="gdpr-actions">
+      <button class="btn-gdpr-decline" onclick="acceptGDPR('essential')">Essential Only</button>
+      <button class="btn-gdpr-accept" onclick="acceptGDPR('all')">Accept All</button>
+    </div>
+  </div>
+
+  <!-- Legal Compliance Modal -->
+  <div class="legal-modal-backdrop" id="legalModal" onclick="if(event.target.id==='legalModal') closeLegalModal()">
+    <div class="legal-modal-box">
+      <button onclick="closeLegalModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-secondary); font-size:1.4rem; cursor:pointer;">✕</button>
+      <div id="legalModalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    let isPro = false;
+
+    const LANG_DICT = {
+      en: {
+        dir: "ltr",
+        subHeadline: "E-Commerce Unit Economics, ROAS & VAT/Sales Tax Intelligence",
+        inputTitle: "Unit Economics & Cost Structure",
+        sellPrice: "Retail Selling Price (AOV)",
+        cogs: "Product Landed Cost (COGS)",
+        shipping: "Shipping & 3PL Fulfillment",
+        adSpend: "Ad Spend / Order (CAC)",
+        platformFee: "Payment / Platform Fee",
+        vat: "US Sales Tax / EU VAT",
+        analyticsTitle: "Real-Time Profitability & ROAS Matrix",
+        netProfitKpi: "Net Profit per Order",
+        marginKpi: "Net Operating Margin",
+        beRoasKpi: "Breakeven ROAS",
+        curRoasKpi: "Realized ROAS",
+        totalCostsKpi: "Total Unit Cost"
+      },
+      de: {
+        dir: "ltr",
+        subHeadline: "E-Commerce Gewinnmargen-, ROAS- & EU-MwSt.-Rechner",
+        inputTitle: "Stückkosten & Kalkulation",
+        sellPrice: "Verkaufspreis (Brutto AOV)",
+        cogs: "Wareneinsatz (COGS)",
+        shipping: "Versand & Fulfillment (3PL)",
+        adSpend: "Werbekosten pro Bestellung (CAC)",
+        platformFee: "Zahlungs- & Plattformgebühr",
+        vat: "Mehrwertsteuer (EU MwSt.)",
+        analyticsTitle: "Echtzeit-Rentabilität & ROAS-Analyse",
+        netProfitKpi: "Reingewinn pro Bestellung",
+        marginKpi: "Netto-Gewinnmarge",
+        beRoasKpi: "Break-Even ROAS",
+        curRoasKpi: "Aktueller ROAS",
+        totalCostsKpi: "Gesamtkosten pro Einheit"
+      },
+      fr: {
+        dir: "ltr",
+        subHeadline: "Calculateur de Marge E-Commerce, ROAS & TVA Européenne",
+        inputTitle: "Structure des Coûts Unitaires",
+        sellPrice: "Prix de Vente (Panier Moyen)",
+        cogs: "Coût d'Achat Produit (COGS)",
+        shipping: "Livraison & Logistique (3PL)",
+        adSpend: "Coût d'Acquisition Pub (CAC)",
+        platformFee: "Frais Stripe / Plateforme",
+        vat: "TVA (Union Européenne)",
+        analyticsTitle: "Tableau de Bord Rentabilité & ROAS",
+        netProfitKpi: "Bénéfice Net par Commande",
+        marginKpi: "Marge Nette Opérationnelle",
+        beRoasKpi: "ROAS Seuil de Rentabilité",
+        curRoasKpi: "ROAS Actuel",
+        totalCostsKpi: "Coût Total Unitaire"
+      },
+      es: {
+        dir: "ltr",
+        subHeadline: "Calculadora de Margen E-Commerce, ROAS e IVA / Impuestos",
+        inputTitle: "Costos Unitarios del Producto",
+        sellPrice: "Precio de Venta (AOV)",
+        cogs: "Costo del Producto (COGS)",
+        shipping: "Envío y Logística (3PL)",
+        adSpend: "Gasto Publicitario (CAC)",
+        platformFee: "Comisión de Pasarela / Plataforma",
+        vat: "IVA Europeo / Sales Tax",
+        analyticsTitle: "Panel de Rentabilidad y ROAS en Vivo",
+        netProfitKpi: "Beneficio Neto por Pedido",
+        marginKpi: "Margen Operativo Neto",
+        beRoasKpi: "ROAS Punto de Equilibrio",
+        curRoasKpi: "ROAS Actual",
+        totalCostsKpi: "Costo Total por Unidad"
+      },
+      ar: {
+        dir: "rtl",
+        subHeadline: "نظام ذكاء هوامش التجارة الإلكترونية، العائد الإعلاني والضرائب الدولية",
+        inputTitle: "معايير تكلفة واقتصاديات الوحدة",
+        sellPrice: "سعر البيع للعميل (AOV)",
+        cogs: "تكلفة البضاعة والمصنع (COGS)",
+        shipping: "الشحن والتخزين (3PL)",
+        adSpend: "تكلفة الإعلانات للطلب (CAC)",
+        platformFee: "عمولة بوابة الدفع والمنصة",
+        vat: "ضريبة المبيعات الأمريكية / VAT الأوروبية",
+        analyticsTitle: "لوحة مؤشرات الربحية والعائد الإعلاني",
+        netProfitKpi: "صافي الربح لكل طلب",
+        marginKpi: "هامش الربح الصافي",
+        beRoasKpi: "نقطة التعادل الإعلاني",
+        curRoasKpi: "العائد الإعلاني الفعلي",
+        totalCostsKpi: "إجمالي التكاليف للوحدة"
+      }
+    };
+
+    function switchLanguage() {
+      const code = document.getElementById('langSelect').value;
+      const d = LANG_DICT[code] || LANG_DICT.en;
+      document.documentElement.lang = code;
+      document.documentElement.dir = d.dir;
+
+      document.getElementById('subHeadline').textContent = d.subHeadline;
+      document.getElementById('txtInputTitle').textContent = d.inputTitle;
+      document.getElementById('lblSellPrice').textContent = d.sellPrice;
+      document.getElementById('lblCogs').textContent = d.cogs;
+      document.getElementById('lblShipping').textContent = d.shipping;
+      document.getElementById('lblAdSpend').textContent = d.adSpend;
+      document.getElementById('lblPlatformFee').textContent = d.platformFee;
+      document.getElementById('lblVat').textContent = d.vat;
+      document.getElementById('txtAnalyticsTitle').textContent = d.analyticsTitle;
+      document.getElementById('lblNetProfitKpi').textContent = d.netProfitKpi;
+      document.getElementById('lblMarginKpi').textContent = d.marginKpi;
+      document.getElementById('lblBeRoasKpi').textContent = d.beRoasKpi;
+      document.getElementById('lblCurRoasKpi').textContent = d.curRoasKpi;
+      document.getElementById('lblTotalCostsKpi').textContent = d.totalCostsKpi;
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('light');
+    }
+
+    function setTax(rate) {
+      document.getElementById('inVatPct').value = rate;
+      runEngine();
+    }
+
+    function applyPreset(preset, btn) {
+      document.querySelectorAll('.presets-group .preset-chip').forEach(c => c.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      if (preset === 'shopify_us') {
+        document.getElementById('currencySelect').value = 'USD';
+        document.getElementById('inPlatformPct').value = 2.9;
+        document.getElementById('inVatPct').value = 7.5;
+      } else if (preset === 'shopify_eu') {
+        document.getElementById('currencySelect').value = 'EUR';
+        document.getElementById('inPlatformPct').value = 1.5;
+        document.getElementById('inVatPct').value = 19.0;
+      } else if (preset === 'amazon_fba') {
+        document.getElementById('inPlatformPct').value = 15.0;
+        document.getElementById('inShipping').value = 6.50;
+      } else if (preset === 'tiktok_us') {
+        document.getElementById('inPlatformPct').value = 6.0;
+        document.getElementById('inShipping').value = 5.99;
+      } else if (preset === 'etsy') {
+        document.getElementById('inPlatformPct').value = 6.5;
+      }
+      runEngine();
+    }
+
+    function toggleProMode() {
+      isPro = !isPro;
+      const overlay = document.getElementById('proLockOverlay');
+      const adBanner = document.getElementById('adStreamBanner');
+      const btn = document.getElementById('proToggleBtn');
+      const txt = document.getElementById('tierStateTxt');
+
+      if (isPro) {
+        overlay.style.display = 'none';
+        adBanner.style.display = 'none';
+        btn.classList.add('is-active');
+        btn.textContent = 'Switch to Free';
+        txt.textContent = 'Pro Active';
+        txt.style.color = 'var(--accent-emerald)';
+      } else {
+        overlay.style.display = 'flex';
+        adBanner.style.display = 'flex';
+        btn.classList.remove('is-active');
+        btn.textContent = 'Upgrade to Pro 🚀';
+        txt.textContent = 'Free Tier';
+        txt.style.color = 'var(--text-secondary)';
+      }
+      updateProProjections();
+    }
+
+    function runEngine() {
+      const curr = document.getElementById('currencySelect').value;
+      document.querySelectorAll('.curr-sym').forEach(el => el.textContent = curr);
+
+      const price = parseFloat(document.getElementById('inPrice').value) || 0;
+      const cogs = parseFloat(document.getElementById('inCogs').value) || 0;
+      const shipping = parseFloat(document.getElementById('inShipping').value) || 0;
+      const adSpend = parseFloat(document.getElementById('inAdSpend').value) || 0;
+      const platformPct = parseFloat(document.getElementById('inPlatformPct').value) || 0;
+      const vatPct = parseFloat(document.getElementById('inVatPct').value) || 0;
+      const returnPct = parseFloat(document.getElementById('inReturnPct').value) || 0;
+
+      document.getElementById('valReturnPct').textContent = returnPct + '%';
+
+      const platformFee = price * (platformPct / 100);
+      const vatFee = price * (vatPct / 100);
+      const returnLoss = (shipping * 1.5) * (returnPct / 100);
+      const feesAndTax = platformFee + vatFee + returnLoss;
+
+      const totalCosts = cogs + shipping + adSpend + feesAndTax;
+      const netProfit = price - totalCosts;
+      const marginPct = price > 0 ? (netProfit / price) * 100 : 0;
+
+      const nonAdCosts = cogs + shipping + feesAndTax;
+      const contrib = price - nonAdCosts;
+      const beRoas = contrib > 0 ? (price / contrib) : 0;
+      const curRoas = adSpend > 0 ? (price / adSpend) : 0;
+
+      document.getElementById('outNetProfit').textContent = netProfit.toFixed(2);
+      document.getElementById('outMarginPct').textContent = marginPct.toFixed(1) + '%';
+      document.getElementById('outBeRoas').textContent = beRoas > 0 ? beRoas.toFixed(2) + 'x' : 'N/A';
+      document.getElementById('outCurRoas').textContent = curRoas > 0 ? curRoas.toFixed(2) + 'x' : '0x';
+      document.getElementById('outTotalCosts').textContent = totalCosts.toFixed(2);
+      document.getElementById('outPriceSummary').textContent = price.toFixed(2) + ' ' + curr;
+
+      const badge = document.getElementById('healthBadge');
+      const hTxt = document.getElementById('healthTxt');
+      if (marginPct >= 22) {
+        badge.className = 'health-pill healthy';
+        hTxt.textContent = 'Healthy Margin (+22%) 🚀';
+      } else if (marginPct >= 10) {
+        badge.className = 'health-pill moderate';
+        hTxt.textContent = 'Moderate Margin (10-22%) ⚠️';
+      } else {
+        badge.className = 'health-pill critical';
+        hTxt.textContent = 'Low / Negative Margin ❌';
+      }
+
+      if (price > 0) {
+        const cW = Math.max(0, Math.min(100, (cogs / price) * 100));
+        const sW = Math.max(0, Math.min(100, (shipping / price) * 100));
+        const aW = Math.max(0, Math.min(100, (adSpend / price) * 100));
+        const fW = Math.max(0, Math.min(100, (feesAndTax / price) * 100));
+        const pW = Math.max(0, Math.min(100, (Math.max(0, netProfit) / price) * 100));
+
+        document.getElementById('barCogs').style.width = cW + '%';
+        document.getElementById('barShipping').style.width = sW + '%';
+        document.getElementById('barAds').style.width = aW + '%';
+        document.getElementById('barFees').style.width = fW + '%';
+        document.getElementById('barProfit').style.width = pW + '%';
+
+        document.getElementById('legValCogs').textContent = cW.toFixed(0) + '%';
+        document.getElementById('legValShip').textContent = sW.toFixed(0) + '%';
+        document.getElementById('legValAds').textContent = aW.toFixed(0) + '%';
+        document.getElementById('legValFees').textContent = fW.toFixed(0) + '%';
+        document.getElementById('legValProf').textContent = pW.toFixed(0) + '%';
+      }
+
+      updateProProjections();
+    }
+
+    function updateProProjections() {
+      const orders = parseInt(document.getElementById('orderSlider').value) || 0;
+      document.getElementById('dispOrders').textContent = orders.toLocaleString();
+      const net = parseFloat(document.getElementById('outNetProfit').textContent) || 0;
+      const mo = Math.round(net * orders);
+      const yr = Math.round(mo * 12);
+      document.getElementById('dispMonthlyNet').textContent = mo.toLocaleString();
+      document.getElementById('dispYearlyNet').textContent = yr.toLocaleString();
+    }
+
+    function exportCSV() {
+      const curr = document.getElementById('currencySelect').value;
+      const price = document.getElementById('inPrice').value;
+      const cogs = document.getElementById('inCogs').value;
+      const ship = document.getElementById('inShipping').value;
+      const cac = document.getElementById('inAdSpend').value;
+      const net = document.getElementById('outNetProfit').textContent;
+      const margin = document.getElementById('outMarginPct').textContent;
+      const beRoas = document.getElementById('outBeRoas').textContent;
+
+      const csv = `Metric,Value,Currency\nSelling Price,${price},${curr}\nCOGS,${cogs},${curr}\nShipping,${ship},${curr}\nAd Spend (CAC),${cac},${curr}\nNet Profit,${net},${curr}\nNet Margin,${margin},%\nBreakeven ROAS,${beRoas},Ratio`;
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'profitpulse_unit_economics.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    // GDPR & Legal Compliance
+    function checkGDPR() {
+      if (!localStorage.getItem('profitpulse_gdpr')) {
+        document.getElementById('gdprBanner').classList.add('show');
+      }
+    }
+    function acceptGDPR(level) {
+      localStorage.setItem('profitpulse_gdpr', level);
+      document.getElementById('gdprBanner').classList.remove('show');
+    }
+
+    const LEGAL_DOCS = {
+      privacy: `
+        <h3 style="margin-bottom:12px;">Privacy Policy (EU GDPR & US CCPA Compliant)</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.7;">
+          <strong>1. Local Data Processing:</strong> ProfitPulse OS processes all financial metrics, product costs, and margins 100% locally inside your web browser. We do not transmit or store your business numbers on external servers.<br><br>
+          <strong>2. European Union (GDPR) Rights:</strong> Users in the EEA and UK have the right to access, rectify, or erase any local preferences stored in browser localStorage.<br><br>
+          <strong>3. California & US Privacy (CCPA/CPRA):</strong> We do not sell personal information. Third-party advertising partners (such as Google AdSense) may use cookies in accordance with your consent choices.
+        </p>
+      `,
+      terms: `
+        <h3 style="margin-bottom:12px;">Terms of Service</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.7;">
+          By accessing ProfitPulse OS, you agree that all calculations are provided for informational and modeling purposes. Merchants are responsible for verifying final tax obligations with a certified CPA or EU VAT advisor.
+        </p>
+      `,
+      cookies: `
+        <h3 style="margin-bottom:12px;">Cookie & LocalStorage Policy</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.7;">
+          We use strictly necessary browser localStorage to remember your consent preferences and theme state. Advertising cookies are only activated upon explicit user consent in compliance with IAB TCF v2.2 and Google Consent Mode v2.
+        </p>
+      `,
+      disclaimer: `
+        <h3 style="margin-bottom:12px;">Financial & Tax Disclaimer</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.7;">
+          ProfitPulse OS provides estimates based on user-supplied inputs. Payment processing rates (Stripe, PayPal), marketplace referral fees (Amazon FBA, TikTok Shop), and US Sales Tax / EU VAT rates vary by product category and jurisdiction.
+        </p>
+      `
+    };
+
+    function openLegalModal(type) {
+      document.getElementById('legalModalContent').innerHTML = LEGAL_DOCS[type] || '';
+      document.getElementById('legalModal').classList.add('open');
+    }
+    function closeLegalModal() {
+      document.getElementById('legalModal').classList.remove('open');
+    }
+
+    // Initialize
+    runEngine();
+    checkGDPR();
+  </script>
+</body>
+</html>
